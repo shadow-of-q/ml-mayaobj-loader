@@ -82,12 +82,12 @@ for x = 0 to 15 do
 done;
 
 (* image computation *)
-Printf.printf "P2\n%d %d\n256\n" w h
+Printf.printf "P2\n%d %d\n256\n" w h;
 for y = 0 to h-1 do
   for x = 0 to w-1 do
     let r = generateray cam w h x y in
-    let closest = ref huge
-    let closestnormal = ref (splat3 0.0)
+    let closest = ref huge in
+    let closestnormal = ref (splat3 0.0) in
     for i = 1 to Array.length spheres - 1 do
       let d = sphere_intersect spheres.(i) r in
       if d < !closest then begin
