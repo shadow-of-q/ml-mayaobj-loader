@@ -1,7 +1,7 @@
 open Mayaobjparser
 open Mayaobj
 
-let scene = Mayaobjparser.loadobj "conference.obj";;
+let scene = loadobj "conference.obj";;
 
 Printf.printf "vertices %d\ntriangles %d\nmaterials %d\n"
   (Array.length scene.vertices)
