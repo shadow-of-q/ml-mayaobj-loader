@@ -3,8 +3,7 @@ open Raytracer
 
 let debug = true
 let out = if debug then stderr else open_out "/dev/null"
-
-let scene_name = "data/teapot.obj";;
+let scene_name = "data/conference.obj";;
 
 Printf.fprintf out "starting to load %s\n" scene_name
 let start = Sys.time()
@@ -41,5 +40,5 @@ if debug then begin
   end;
 end;
 
-Raytracer.raytrace scene
+if not debug then Raytracer.raytrace scene;
 
