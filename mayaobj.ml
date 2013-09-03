@@ -1,51 +1,44 @@
 (* vectors *)
-type vec3d = { x:float; y:float; z:float }
-type vec3i = { xi:int; yi:int; zi:int }
+type vec3d = { x : float; y : float; z : float }
+type vec3i = { xi : int; yi : int; zi : int }
 
 (* material description *)
 type material = {
-  name:string;
-  mapka:string;
-  mapkd:string;
-  mapd:string;
-  mapbump:string;
-  km:float;
-  reflect:float;
-  refract:float;
-  trans:float;
-  shiny:float;
-  glossy:float;
-  refract_index:float;
-  illum:int;
-  amb:vec3d;
-  diff:vec3d;
-  spec:vec3d;
+  mat_name: string;
+  mat_mapka: string;
+  mat_mapkd: string;
+  mat_mapd: string;
+  mat_mapbump: string;
+  mat_km: float;
+  mat_reflect: float;
+  mat_refract: float;
+  mat_trans: float;
+  mat_shiny: float;
+  mat_glossy: float;
+  mat_refract_index: float;
+  mat_illum: int;
+  mat_amb: vec3d;
+  mat_diff: vec3d;
+  mat_spec: vec3d;
 }
 
 (* indexed triangle *)
 type triangle = {
-  m:int;
-  v:vec3i;
+  tri_mat: int;
+  tri_vert: vec3i;
 }
 
 (* complete vertex *)
 type vertex = {
-  p:vec3d;
-  n:vec3d;
-  t:vec3d;
-}
-
-(* describe consecutive triangles with same material *)
-type matgroup = {
-  first:int;
-  last:int;
-  m:int;
+  p: vec3d;
+  n: vec3d;
+  t: vec3d;
 }
 
 (* complete wavefront obj mesh *)
 type obj = {
-  triangles:triangle array;
-  vertices:vertex array;
-  materials:material array;
+  triangles: triangle array;
+  vertices: vertex array;
+  materials: material array;
 }
 
