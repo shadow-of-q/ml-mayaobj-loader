@@ -1,0 +1,60 @@
+project (CUBE)
+cmake_minimum_required (VERSION 2.6.0)
+
+set (CUBE_CMAKE_DIR "${CUBE_SOURCE_DIR}/cmake")
+set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CUBE_CMAKE_DIR}")
+
+set (MEMORY_DEBUGGER false CACHE bool "activate the memory debugger")
+set (TEST_TASKS false CACHE bool "compile the tests for the tasking system")
+
+if (NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif (NOT CMAKE_BUILD_TYPE)
+if (NOT COMPILER)
+  set(COMPILER "gcc")
+endif (NOT COMPILER)
+
+if (MEMORY_DEBUGGER)
+  add_definitions (-DMEMORY_DEBUGGER)
+endif (MEMORY_DEBUGGER)
+
+if (COMPILER STREQUAL "gcc")
+  set (CMAKE_CXX_FLAGS "-Wl,-E -Wstrict-aliasing=2 -Wno-invalid-offsetof -fstrict-aliasing -msse2 -ffast-math -fPIC -Wall -fno-rtti -fno-exceptions -std=c++0x")
+  set (CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG -ftree-vectorize")
+  set (CMAKE_EXE_LINKER_FLAGS "-ldl")
+elseif (COMPILER STREQUAL "clang")
+  set (CMAKE_C_COMPILER             "clang")
+  set (CMAKE_C_FLAGS                "-Wall -std=c99")
+  set (CMAKE_C_FLAGS_DEBUG          "-g")
+  set (CMAKE_C_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+  set (CMAKE_C_FLAGS_RELEASE        "-O3 -DNDEBUG")
+  set (CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")
+  set (CMAKE_CXX_COMPILER           "clang++")
+  set (CMAKE_CXX_FLAGS "-fstrict-aliasing -msse2 -fPIC -Wall -Wno-format-security -Wno-invalid-offsetof -std=c++0x")
+  set (CMAKE_CXX_FLAGS_DEBUG          "-g")
+  set (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE        "-O3 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+  set (CMAKE_AR      "llvm-ar")
+  set (CMAKE_LINKER  "llvm-ld")
+  set (CMAKE_NM      "llvm-nm")
+  set (CMAKE_OBJDUMP "llvm-objdump")
+  set (CMAKE_RANLIB  "ranlib")
+  set (CMAKE_EXE_LINKER_FLAGS "-ldl")
+else ()
+  message (FATAL_ERROR "--> unknown or unsupported compiler")
+endif ()
+
+include (FindSDL)
+if (NOT SDL_FOUND)
+  message (FATAL_ERROR "--> could not locate required SDL files")
+endif()
+
+set (SRC
+  base/stl.cpp
+  base/tools.cpp
+  base/math.cpp
+  obj.cpp
+  main.cpp)
+add_executable (loadobj ${SRC})
+
