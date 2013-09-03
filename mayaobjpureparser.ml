@@ -254,7 +254,7 @@ let loadobj filename =
   let norarray = makearray st.nor default_nor in
   let texarray = makearray st.tex default_tex in
   let vertnum = Vertexmap.cardinal st.vertmap in
-  let vertarray = Array.make (Vertexmap.cardinal st.vertmap) default_vert in
+  let vertarray = Array.make vertnum default_vert in
     Vertexmap.iter (fun key value -> vertarray.(value) <- {
       p = posarray.(key.(0));
       t = texarray.(key.(1));
