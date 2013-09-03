@@ -55,6 +55,6 @@ set (SRC
   base/tools.cpp
   base/math.cpp
   obj.cpp
-  main.cpp)
+  loadobj.cpp)
 add_executable (loadobj ${SRC})
 

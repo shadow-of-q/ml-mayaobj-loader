@@ -1,4 +1,12 @@
-raytracer_bench
-===============
+Maya .obj / .mtl file loader
+============================
 
-Test language performance with a very simple ray tracer
+OCaml pure / impure loading of .obj/.mtl files
+
+A simple c++ version is also included
+
+`> make` for ocaml build
+
+`> mkdir build; cd build; cmake ../` for c++ build
+
+
