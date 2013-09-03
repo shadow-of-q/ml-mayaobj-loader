@@ -1,4 +1,4 @@
-open Mayaobj;;
+open Mayaobj
 
 (* to compare indexed vertices *)
 module IndexedVertex =
