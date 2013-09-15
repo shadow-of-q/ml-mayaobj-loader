@@ -424,7 +424,7 @@ if (from.NAME) {\
   }
   if (grpnum) {
     grp = NEWAE(matgroup, grpnum);
-    memcpy(grp,  &matgrp[0],  sizeof(matgrp) * grpnum);
+    memcpy(grp,  &matgrp[0],  sizeof(matgroup) * grpnum);
   }
   mat = matarray;
   fprintf(stderr, "obj: %s, %i triangles\n", filename, trinum);

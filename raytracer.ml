@@ -18,22 +18,15 @@ let cross a b = {
 let normalize a = let n = 1.0 /. length a in a *| splat n
 
 type camera = {
-  org: vec3d;
-  up: vec3d;
-  view: vec3d;
-  imgplaneorg: vec3d;
-  xaxis: vec3d;
-  zaxis: vec3d;
-  fov: float;
-  ratio: float;
-  dist: float
-}
-
-type ray = {
-  org: vec3d;
-  dir: vec3d;
-  tnear: float;
-  tfar: float
+  cam_org: vec3d;
+  cam_up: vec3d;
+  cam_view: vec3d;
+  cam_imgplaneorg: vec3d;
+  cam_xaxis: vec3d;
+  cam_zaxis: vec3d;
+  cam_fov: float;
+  cam_ratio: float;
+  cam_dist: float
 }
 
 let makecamera org up view fov ratio =
@@ -46,21 +39,28 @@ let makecamera org up view fov ratio =
   let nzaxis = cross nview nxaxis in
   let imgplaneorg = dist*|nview +| left*|nxaxis -| top*|nzaxis in
   let scaledxaxis = nxaxis *| splat ratio in {
-     org = org; up = nup; view = nview;
-     imgplaneorg = imgplaneorg;
-     xaxis = scaledxaxis; zaxis = nzaxis;
-     fov = fov; ratio = ratio; dist = dist.x
+     cam_org = org; cam_up = nup; cam_view = nview;
+     cam_imgplaneorg = imgplaneorg;
+     cam_xaxis = scaledxaxis; cam_zaxis = nzaxis;
+     cam_fov = fov; cam_ratio = ratio; cam_dist = dist.x
   }
+
+type ray = {
+  org: vec3d;
+  dir: vec3d;
+  tnear: float;
+  tfar: float
+}
 
 let generateray cam w h x y =
   let rw = splat (1.0 /. float w) in
   let rh = splat (1.0 /. float h) in
   let fx = splat (float x) in
   let fy = splat (float y) in
-  let nxaxis = cam.xaxis *| rw in
-  let nzaxis = cam.zaxis *| rh in
-  let dir = normalize (cam.imgplaneorg +| fx *| nxaxis +| fy *| nzaxis) in
-  { org = cam.org; dir = dir; tnear = 0.0; tfar = huge }
+  let nxaxis = cam.cam_xaxis *| rw in
+  let nzaxis = cam.cam_zaxis *| rh in
+  let dir = normalize (cam.cam_imgplaneorg +| fx *| nxaxis +| fy *| nzaxis) in
+  { org = cam.cam_org; dir = dir; tnear = 0.0; tfar = huge }
 
 (* Moeller-trumbore intersection routine *)
 let no_isec = (0, [|0.0; 0.0; 0.0|]) (* (isec?, [|u; v; t|] *)
